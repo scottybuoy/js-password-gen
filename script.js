@@ -1,14 +1,16 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-const lettersLower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-const lettersUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-const numbersArray = [];
-const specialChars = [" ", "!", "#", "$", "%", "&", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "", "'\'", "]", "^", "_", "`", "{", "|", "}", "~"];
+var letLow = "abcdefghijklmnopqrstuvwxyz";
+var letUp = letLow.toUpperCase();
+var nums = "0123456789";
+var specChar = "!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+var allChar = letLow.concat(letUp, nums, specChar);
+var noLow = letUp.concat(nums, specChar);
+var noUp = letLow.concat(nums, specChar);
+var noNum = letLow.concat(letUp, specChar);
+var noSpecChar = letLow.concat(letUp, nums);
 
-for (i=1; i<129; i++) {
-  numbersArray[i-1] = i;
-}
-console.log(numbersArray[127]);
+
 
 
 // Write password to the #password input
@@ -21,11 +23,11 @@ var inputLength = prompt("Please choose a password length between 8 and 128 char
       var inputLength = prompt("Please enter a valid number between 8 and 128 characters");
     }
   }
+      var inputLowerCase = confirm("Click OK to include lowercase letters,\nCancel to exclude them");
+      var inputUpperCase = confirm("Click OK to include uppercase letters,\nCancel to exclude them");
+      var inputNumeric = confirm("Click OK to include numeric characters,\nCancel to exclude them");
+      var inputSpecial = confirm("Click OK to include special characters,\nCancel to exclude them");
 
-  var inputLowerCase = confirm("Click OK to include lowercase letters,\nCancel to exclude them");
-  var inputUpperCase = confirm("Click OK to include uppercase letters,\nCancel to exclude them");
-  var inputNumeric = confirm("Click OK to include numeric characters,\nCancel to exclude them");
-  var inputSpecial = confirm("Click OK to include special characters,\nCancel to exclude them");
 
   while (inputLowerCase === false && inputUpperCase === false && inputNumeric === false && inputSpecial === false) {
     if (inputLowerCase === false && inputUpperCase === false && inputNumeric === false && inputSpecial === false) {
@@ -37,9 +39,50 @@ var inputLength = prompt("Please choose a password length between 8 and 128 char
 
     }
   }
+
+// User confirms all character types
+  if (inputLowerCase === true && inputUpperCase === true && inputNumeric === true && inputSpecial === true) {
+    function generatePassword(length) {
+      var result = "";
+      for (i=0; i<length; i++) {
+        result += allChar.charAt(Math.floor(Math.random() * allChar.length));
+      }
+      return result;
+    }
+    document.querySelector("#password").innerHTML = generatePassword(inputLength);
+    console.log("hey");
+  }
   
-  var passSelect = Math.floor(Math.random() * 26);
-  console.log(lettersLower[passSelect]);
+
+  // User excludes lower case
+  if (inputLowerCase === false && inputUpperCase === true && inputNumeric === true && inputSpecial === true) {
+    function generatePassword(length) {
+      var result = "";
+      for (i=0; i<length; i++) {
+        result += allChar.charAt(Math.floor(Math.random() * allChar.length));
+      }
+      return result;
+    }
+    document.querySelector("#password").innerHTML = generatePassword(inputLength);
+    console.log("hey");
+  }
+
+
+  // User excludes numbers
+  if (inputLowerCase === true && inputUpperCase === true && inputNumeric === false && inputSpecial === true) {
+    function generatePassword(length) {
+      var result = "";
+      for (i=0; i<length; i++) {
+        result += allChar.charAt(Math.floor(Math.random() * allChar.length));
+      }
+      return result;
+    }
+    document.querySelector("#password").innerHTML = generatePassword(inputLength);
+    console.log("hey");
+  }
+
+  
+
 
   // var password = generatePassword();
   // var passwordText = document.querySelector("#password");
